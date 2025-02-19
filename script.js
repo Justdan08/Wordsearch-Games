@@ -1,6 +1,6 @@
 // Word Search Configuration
 const gridSize = 10;
-const words = ["HULK", "THOR", "IRONMAN", "GROOT", "ROCKET", "WIDOW", "HAWKEYE", "ANTMAN", "BUCKY", "TESSERACT", "GAUNTLET", "SHEILD", "VIBRANIUM",  ];
+const words = ["HULK", "THOR", "IRONMAN", "GROOT", "ROCKET", "WIDOW", "HAWKEYE", "ANTMAN", "BUCKY", "TESSERACT", "GAUNTLET", "SHEILD", "VIBRANIUM",];
 let selectedCells = [];
 let foundWords = [];
 let isDragging = false;
@@ -23,7 +23,7 @@ for (let i = 0; i < gridSize; i++) {
     cell.classList.add("cell");
     cell.dataset.row = i;
     cell.dataset.col = j;
-    cell.textContent = getRandomLetter();
+    cell.textContent = ""; // Start with empty cells
     cell.addEventListener("mousedown", () => startDrag(cell));
     cell.addEventListener("mouseenter", () => dragOver(cell));
     cell.addEventListener("mouseup", endDrag);
@@ -36,6 +36,9 @@ words.forEach(word => {
   placeWord(word);
 });
 
+// Fill remaining cells with random letters
+fillRandomLetters();
+
 // Function to place a word in the grid
 function placeWord(word) {
   const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
@@ -44,24 +47,50 @@ function placeWord(word) {
   if (direction === "horizontal") {
     row = Math.floor(Math.random() * gridSize);
     col = Math.floor(Math.random() * (gridSize - word.length));
-    for (let i = 0; i < word.length; i++) {
-      const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col + i}"]`);
-      cell.textContent = word[i];
+    if (canPlaceWord(word, row, col, direction)) {
+      for (let i = 0; i < word.length; i++) {
+        const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col + i}"]`);
+        cell.textContent = word[i];
+      }
+    } else {
+      placeWord(word); // Retry placing the word
     }
   } else {
     col = Math.floor(Math.random() * gridSize);
     row = Math.floor(Math.random() * (gridSize - word.length));
-    for (let i = 0; i < word.length; i++) {
-      const cell = document.querySelector(`.cell[data-row="${row + i}"][data-col="${col}"]`);
-      cell.textContent = word[i];
+    if (canPlaceWord(word, row, col, direction)) {
+      for (let i = 0; i < word.length; i++) {
+        const cell = document.querySelector(`.cell[data-row="${row + i}"][data-col="${col}"]`);
+        cell.textContent = word[i];
+      }
+    } else {
+      placeWord(word); // Retry placing the word
     }
   }
 }
 
-// Function to get a random letter
-function getRandomLetter() {
+// Function to check if a word can be placed at a specific location
+function canPlaceWord(word, row, col, direction) {
+  for (let i = 0; i < word.length; i++) {
+    const cell = direction === "horizontal"
+      ? document.querySelector(`.cell[data-row="${row}"][data-col="${col + i}"]`)
+      : document.querySelector(`.cell[data-row="${row + i}"][data-col="${col}"]`);
+    if (cell.textContent !== "" && cell.textContent !== word[i]) {
+      return false; // Conflict detected
+    }
+  }
+  return true; // No conflicts
+}
+
+// Function to fill remaining cells with random letters
+function fillRandomLetters() {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  return letters[Math.floor(Math.random() * letters.length)];
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach(cell => {
+    if (cell.textContent === "") {
+      cell.textContent = letters[Math.floor(Math.random() * letters.length)];
+    }
+  });
 }
 
 // Drag and drop functionality
@@ -131,7 +160,7 @@ function initializeGame() {
       cell.classList.add("cell");
       cell.dataset.row = i;
       cell.dataset.col = j;
-      cell.textContent = getRandomLetter();
+      cell.textContent = "";
       cell.addEventListener("mousedown", () => startDrag(cell));
       cell.addEventListener("mouseenter", () => dragOver(cell));
       cell.addEventListener("mouseup", endDrag);
@@ -142,4 +171,6 @@ function initializeGame() {
   words.forEach(word => {
     placeWord(word);
   });
+
+  fillRandomLetters();
 }
