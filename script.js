@@ -1,6 +1,6 @@
 // Word Search Configuration
 const gridSize = 10;
-const words = ["JAVASCRIPT", "HTML", "CSS", "WEB", "GAME", "PYTHON", "CODE", "FUN"];
+const words = ["HULK", "THOR", "IRONMAN", "GROOT", "ROCKET", "WIDOW", "HAWKEYE", "ANTMAN", "BUCKY", "TESSERACT", "GAUNTLET", "SHEILD", "VIBRANIUM",];
 let selectedCells = [];
 let foundWords = [];
 let isDragging = false;
