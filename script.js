@@ -110,3 +110,74 @@ function resetGame() {
 // Keep existing placeWord, canPlaceWord, fillRandomLetters, 
 // drag functions, and checkForWord from previous implementation
 // (Copy those functions exactly as you had them before)
+// ... (keep the existing puzzles array and variables)
+
+function resetGame() {
+  // Clear the grid and word list
+  wordsearch.innerHTML = "";
+  wordsContainer.innerHTML = "<div>Words to find:</div>"; // Only one header
+  selectedCells = [];
+  foundWords = [];
+  initializeGame(); // Rebuild the game
+}
+
+function initializeGame() {
+  // Clear the grid and reset word list
+  wordsearch.innerHTML = "";
+  wordsContainer.innerHTML = "<div>Words to find:</div>"; // Reset header once
+
+  // Create grid cells
+  for (let i = 0; i < currentPuzzle.gridSize; i++) {
+    for (let j = 0; j < currentPuzzle.gridSize; j++) {
+      const cell = createCell(i, j);
+      wordsearch.appendChild(cell);
+    }
+  }
+
+  // Place words and fill random letters
+  currentPuzzle.words.forEach(word => placeWord(word));
+  fillRandomLetters();
+
+  // Add words to the word list
+  currentPuzzle.words.forEach(word => {
+    const wordElement = document.createElement("div");
+    wordElement.textContent = word;
+    wordsContainer.appendChild(wordElement);
+  });
+
+  // Reattach touch events to new cells
+  addTouchSupport(); // Critical fix for broken touch controls
+}
+
+// Ensure touch events are added to new cells
+function addTouchSupport() {
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach(cell => {
+    // Remove existing listeners to avoid duplicates
+    cell.removeEventListener("touchstart", handleTouchStart);
+    cell.removeEventListener("touchmove", handleTouchMove);
+    cell.removeEventListener("touchend", handleTouchEnd);
+
+    // Add new listeners
+    cell.addEventListener("touchstart", handleTouchStart);
+    cell.addEventListener("touchmove", handleTouchMove);
+    cell.addEventListener("touchend", handleTouchEnd);
+  });
+}
+
+// Separate touch handlers for cleaner removal/reattachment
+function handleTouchStart(e) {
+  e.preventDefault();
+  startDrag(e.target);
+}
+
+function handleTouchMove(e) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const target = document.elementFromPoint(touch.clientX, touch.clientY);
+  if (target?.classList.contains("cell")) dragOver(target);
+}
+
+function handleTouchEnd() {
+  endDrag();
+}
