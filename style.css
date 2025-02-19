@@ -42,6 +42,9 @@ h1 {
   cursor: pointer;
   user-select: none;
   aspect-ratio: 1;
+  min-width: 20px; /* Ensure cells have a minimum size */
+  min-height: 20px; /* Ensure cells have a minimum size */
+}
 }
 
 .cell.selected {
