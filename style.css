@@ -15,6 +15,7 @@ h1 {
 
 #wordsearch {
   display: grid;
+  grid-template-columns: repeat(10, 1fr); /* Use fractional units for responsiveness */
   gap: 2px;
   justify-content: center;
   margin: 10px auto;
@@ -27,7 +28,7 @@ h1 {
   justify-content: center;
   background-color: white;
   border: 1px solid black;
-  font-size: 16px;
+  font-size: 16px; /* Smaller font size for mobile */
   font-weight: bold;
   cursor: pointer;
   user-select: none;
@@ -78,10 +79,17 @@ h1 {
   }
 
   #wordsearch {
-    grid-template-columns: repeat(var(--grid-size), 8vw); /* Use viewport width for cell size */
-    grid-template-rows: repeat(var(--grid-size), 8vw); /* Ensure cells are square */
+    grid-template-columns: repeat(10, 8vw); /* Use viewport width for cell size */
+    grid-template-rows: repeat(10, 8vw); /* Ensure cells are square */
     gap: 1px; /* Smaller gap for mobile */
   }
 
   #word-list {
-    font-size: 14px
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  #reset-button {
+    font-size: 12px; /* Smaller button text for mobile */
+    padding: 6px 12px;
+  }
+}
