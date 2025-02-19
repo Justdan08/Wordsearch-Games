@@ -15,23 +15,7 @@ words.forEach(word => {
   wordElement.textContent = word;
   wordsContainer.appendChild(wordElement);
 });
-// Add touch event listeners for mobile devices
-const cells = document.querySelectorAll(".cell");
-cells.forEach(cell => {
-  cell.addEventListener("touchstart", (e) => {
-    e.preventDefault(); // Prevent default touch behavior
-    startDrag(cell);
-  });
-  cell.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-    const touch = e.touches[0];
-    const target = document.elementFromPoint(touch.clientX, touch.clientY);
-    if (target && target.classList.contains("cell")) {
-      dragOver(target);
-    }
-  });
-  cell.addEventListener("touchend", endDrag);
-});
+
 // Create the grid
 for (let i = 0; i < gridSize; i++) {
   for (let j = 0; j < gridSize; j++) {
@@ -128,7 +112,23 @@ function endDrag() {
   isDragging = false;
   checkForWord();
 }
-
+// Add touch event listeners for mobile devices
+const cells = document.querySelectorAll(".cell");
+cells.forEach(cell => {
+  cell.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // Prevent default touch behavior
+    startDrag(cell);
+  });
+  cell.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (target && target.classList.contains("cell")) {
+      dragOver(target);
+    }
+  });
+  cell.addEventListener("touchend", endDrag);
+});
 // Function to check if selected cells form a word
 function checkForWord() {
   const selectedWord = selectedCells.map(cell => cell.textContent).join("");
