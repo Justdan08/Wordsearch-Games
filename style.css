@@ -29,6 +29,7 @@ h1 {
   justify-content: center;
   margin: 10px auto;
   max-width: 100%;
+  border: 2px solid red; /* Temporary border for debugging */
 }
 
 .cell {
