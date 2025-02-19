@@ -99,14 +99,6 @@ function addTouchSupport() {
   });
 }
 
-function resetGame() {
-  wordsearch.innerHTML = "";
-  wordsContainer.innerHTML = "<div>Words to find:</div>";
-  selectedCells = [];
-  foundWords = [];
-  initializeGame();
-}
-
 // Keep existing placeWord, canPlaceWord, fillRandomLetters, 
 // drag functions, and checkForWord from previous implementation
 // (Copy those functions exactly as you had them before)
