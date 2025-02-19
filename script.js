@@ -50,7 +50,37 @@ function initializeGame() {
       wordsearch.appendChild(cell);
     }
   }
+function initializeGame() {
+  console.log("Initializing game..."); // Debugging
+  wordsearch.innerHTML = "";
+  wordsContainer.innerHTML = "<div>Words to find:</div>";
 
+  // Create grid
+  for (let i = 0; i < currentPuzzle.gridSize; i++) {
+    for (let j = 0; j < currentPuzzle.gridSize; j++) {
+      const cell = createCell(i, j);
+      wordsearch.appendChild(cell);
+    }
+  }
+
+  console.log("Grid created with", currentPuzzle.gridSize, "rows and columns."); // Debugging
+
+  // Place words
+  currentPuzzle.words.forEach(word => placeWord(word));
+
+  // Fill empty cells
+  fillRandomLetters();
+
+  // Display words
+  currentPuzzle.words.forEach(word => {
+    const wordElement = document.createElement("div");
+    wordElement.textContent = word;
+    wordsContainer.appendChild(wordElement);
+  });
+
+  // Add touch events for mobile
+  addTouchSupport();
+}
   // Place words
   currentPuzzle.words.forEach(word => placeWord(word));
 
