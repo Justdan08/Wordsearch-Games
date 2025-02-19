@@ -13,13 +13,22 @@ h1 {
   margin-bottom: 10px;
 }
 
+.puzzle-selector {
+  margin: 10px 0;
+}
+
+#puzzle-select {
+  padding: 8px;
+  font-size: 16px;
+}
+
 #wordsearch {
   display: grid;
-  grid-template-columns: repeat(10, 1fr); /* Use fractional units for responsiveness */
+  grid-template-columns: repeat(15, 1fr);
   gap: 2px;
   justify-content: center;
   margin: 10px auto;
-  max-width: 100%; /* Ensure the grid doesn't overflow */
+  max-width: 100%;
 }
 
 .cell {
@@ -28,20 +37,21 @@ h1 {
   justify-content: center;
   background-color: white;
   border: 1px solid black;
-  font-size: 16px; /* Smaller font size for mobile */
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
-  aspect-ratio: 1; /* Ensure cells are square */
+  aspect-ratio: 1;
 }
 
 .cell.selected {
-  background-color: rgba(73, 132, 184, 0.5); /* #4984B8 with 50% opacity */
+  background-color: rgba(73, 132, 184, 0.5);
 }
 
 #word-list {
   margin-top: 10px;
   font-size: 16px;
+  padding: 0 10px;
 }
 
 #word-list div {
@@ -54,42 +64,43 @@ h1 {
 }
 
 #reset-button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  font-size: 14px;
+  margin: 15px auto;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
   background-color: #4984B8;
   color: white;
   border: none;
   border-radius: 5px;
+  display: block;
 }
 
-#reset-button:hover {
-  background-color: #366a9b;
-}
-
-/* Mobile-Specific Styles */
+/* Mobile Optimization */
 @media (max-width: 600px) {
   h1 {
-    font-size: 20px; /* Smaller heading for mobile */
+    font-size: 20px;
   }
 
-  .cell {
-    font-size: 14px; /* Smaller font size for mobile */
+  #puzzle-select {
+    font-size: 14px;
+    padding: 6px;
   }
 
   #wordsearch {
-    grid-template-columns: repeat(10, 8vw); /* Use viewport width for cell size */
-    grid-template-rows: repeat(10, 8vw); /* Ensure cells are square */
-    gap: 1px; /* Smaller gap for mobile */
+    grid-template-columns: repeat(15, 5.5vw);
+    gap: 1px;
+  }
+
+  .cell {
+    font-size: 10px;
   }
 
   #word-list {
-    font-size: 14px; /* Smaller font size for mobile */
+    font-size: 14px;
   }
 
   #reset-button {
-    font-size: 12px; /* Smaller button text for mobile */
-    padding: 6px 12px;
+    font-size: 14px;
+    padding: 8px 16px;
   }
 }
